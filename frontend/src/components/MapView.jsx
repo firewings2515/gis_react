@@ -1,7 +1,7 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { lngLatAltToLocalMeters, originLngLat } from './utils';
+import { lngLatAltToLocalMeters, originLngLat } from '../utils/utils';
 import * as THREE from 'three';
 
 // export default function MapView({ onKeyPress }) {

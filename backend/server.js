@@ -13,6 +13,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
+app.use('/images', express.static('./data/images'));
+
 app.get("/", (req, res) => {
     res.json({
         blogPost: [{title: "test  title", content: "test content"}]
