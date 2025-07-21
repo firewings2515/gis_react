@@ -13,7 +13,6 @@ const menu = [
     label: "底圖",
     children: [
       { label: "ArcGIS", action: "basemap-arcgis" },
-      { label: "Google Satellite", action: "basemap-google" },
       { label: "OpenStreetMap", action: "basemap-osm" }
     ]
   },
@@ -89,6 +88,12 @@ function App() {
           console.log("label", label, "action", action);
           if (action === "114-1")
           {fetchAndRenderGPS();}
+          if (action === "basemap-arcgis") {
+            mapRef.current.switchBaseMap("arcgis");
+          }
+          if (action === "basemap-osm") {
+            mapRef.current.switchBaseMap("osm")
+          }
           //alert(`Clicked: ${label} (${action})`);
         }}
       />

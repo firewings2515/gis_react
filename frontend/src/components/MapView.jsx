@@ -4,13 +4,58 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { lngLatAltToLocalMeters, originLngLat } from '../utils/utils';
 import * as THREE from 'three';
 
+const BASE_MAPS = {
+  arcgis: {
+    id: "arcgis",
+    name: "ArcGIS World Imagery",
+    tiles: [
+      "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    ]
+  },
+  osm: {
+    id: "osm",
+    name: "OpenStreetMap",
+    tiles: [
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+    ]
+  }
+};
+
 // export default function MapView({ onKeyPress }) {
   const MapView = forwardRef(({ onKeyPress }, ref) => {
     const containerRef = useRef(null); // For DOM node
     const mapInstanceRef = useRef(null); // For MapLibre Map instance
-  
+    
+    const switchBaseMap = (baseId) => {
+    const base = BASE_MAPS[baseId];
+    const map = mapInstanceRef.current;
+    if (!base || !map) return;
+
+    // If the source exists, just update its tiles array.
+    if (map.getSource("base-source")) {
+      map.getSource("base-source").setTiles(base.tiles);
+    } else {
+      // Remove any existing base source and layer, then add the new one.
+      if (map.getLayer("base")) map.removeLayer("base");
+      if (map.getSource("base-source")) map.removeSource("base-source");
+      map.addSource("base-source", {
+        type: "raster",
+        tiles: base.tiles,
+        tileSize: 256,
+        minzoom: 0,
+        maxzoom: 18
+      });
+      map.addLayer({
+        id: "base",
+        type: "raster",
+        source: "base-source"
+      }, "three-layer");
+    }
+  };
+
     useImperativeHandle(ref, () => ({
-      getMap: () => mapInstanceRef.current
+      getMap: () => mapInstanceRef.current,
+      switchBaseMap,
     }));
   
     useEffect(() => {
