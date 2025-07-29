@@ -46,7 +46,7 @@ export default function GpsImagePanel({ imageName, onClose }) {
   if (!imageName) return null;
 
   //imageName = "000072.jpg"
-  const imgUrl = `http://localhost:8080/images/${imageName}`;
+  const imgUrl = `http://140.118.119.122:8080/images/${imageName}`;
 console.log("image url", imgUrl);
   return (
     <div

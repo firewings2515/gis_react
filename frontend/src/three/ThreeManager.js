@@ -65,7 +65,21 @@ export default class ThreeManager {
     // Trigger repaint on the map
     this.map.triggerRepaint?.();
   }
-
+  cleanObject() {
+	  console.log("clean object");
+    this.raycastGroup.children.forEach(child => {
+      this.raycastGroup.remove(child);
+      child.geometry.dispose();
+      if (child.material) {
+        if (Array.isArray(child.material)) {
+          child.material.forEach(mat => mat.dispose());
+        } else {
+          child.material.dispose();
+        }
+      }
+    });
+    this.map.triggerRepaint?.();
+  }
   render(matrix) {
     // Update camera projection matrix
     const cameraMatrix = originCameraMatrix(matrix, this.map.getCenter());

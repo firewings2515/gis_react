@@ -8,6 +8,7 @@ const ThreeScene = forwardRef(({ mapRef, onMeshClick}, ref) => {
   useImperativeHandle(ref, () => ({
     addCubeAt: (...args) => managerRef.current?.addCubeAt(...args),
     addRayDebug: () => console.log(managerRef.current?.scene.children),
+	cleanObject: () => managerRef.current?.cleanObject(),
   }));
 
   useEffect(() => {

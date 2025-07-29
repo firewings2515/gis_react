@@ -38,9 +38,10 @@ function App() {
   const fetchAndRenderGPS = async () => {
     try {
       console.log("fetching gps data...");
-      const res = await axios.get('http://localhost:8080/get_gps');
+      const res = await axios.get('http://140.118.119.122:8080/get_gps');
       const gpsjson = res.data.gpsData;
       const first = gpsjson[0];
+	  threeRef.current?.cleanObject();
       //threeRef.current?.addCubeAt(first.lng, first.lat, first.height);
       gpsjson.forEach(point => {
         threeRef.current?.addCubeAt(new GPSData(point));
